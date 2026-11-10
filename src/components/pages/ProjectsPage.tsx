@@ -1,4 +1,11 @@
-import { ExternalLink, Eye, FolderGit2, ImageIcon } from 'lucide-react';
+import {
+  CheckCircle2,
+  ExternalLink,
+  Eye,
+  FolderGit2,
+  ImageIcon,
+  Layers,
+} from 'lucide-react';
 import { PROJECTS } from '../../data/portfolioData';
 import { ProjectItem } from '../../types/portfolio';
 
@@ -9,27 +16,136 @@ export interface ProjectsPageProps {
 }
 
 /**
- * Page 3 Spread — Projects I've Worked On:
- * Splits projects across two spreads so each reading page stays concise,
- * with editable screenshot placeholders, technology pills, View Details trigger,
- * and honest GitHub / Live Demo link placeholders.
+ * Page 3 Spreads — Projects I've Worked On:
+ * - First spread (pp. 7–8): Dedicated side-by-side showcase for the featured
+ *   V2 Boutique – E-Commerce Platform (Left: V2 Operations Admin Dashboard,
+ *   Right: V2 Boutique E-Commerce Website).
+ * - Continuation spread (pp. 9–10): Remaining college & AI projects.
  */
-export function ProjectsPage({ side, continuation = false, onSelectProject }: ProjectsPageProps) {
-  const projectsPerSpread = Math.ceil(PROJECTS.length / 2);
-  const spreadStart = continuation ? projectsPerSpread : 0;
-  const spreadProjects = PROJECTS.slice(spreadStart, spreadStart + projectsPerSpread);
-  const half = Math.ceil(spreadProjects.length / 2);
-  const items = side === 'left'
-    ? spreadProjects.slice(0, half)
-    : spreadProjects.slice(half);
+export function ProjectsPage({
+  side,
+  continuation = false,
+  onSelectProject,
+}: ProjectsPageProps) {
+  const featured = PROJECTS.find((p) => p.dualShowcase);
+  const remaining = featured
+    ? PROJECTS.filter((p) => p.id !== featured.id)
+    : PROJECTS;
+
+  if (!continuation && featured?.dualShowcase) {
+    const panel =
+      side === 'left' ? featured.dualShowcase.left : featured.dualShowcase.right;
+
+    return (
+      <div className="page-content v2-spread-page">
+        {side === 'left' ? (
+          <>
+            <div className="v2-header-row">
+              <div>
+                <h2 className="page-title">Projects I've Worked On</h2>
+                <div className="title-accent" />
+              </div>
+              <span className="v2-live-badge">{featured.status}</span>
+            </div>
+
+            <div className="v2-intro-block">
+              <h3 className="v2-platform-name">{featured.title}</h3>
+              <p className="v2-platform-desc">{featured.shortDescription}</p>
+            </div>
+          </>
+        ) : (
+          <div className="v2-right-top-bar">
+            <span className="v2-eyebrow">
+              <Layers size={13} />
+              <span>Dual-Surface Architecture · Customer &amp; Admin</span>
+            </span>
+            {featured.liveDemoUrl && (
+              <a
+                href={featured.liveDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="v2-live-btn"
+              >
+                <span>Open Live Project</span>
+                <ExternalLink size={13} />
+              </a>
+            )}
+          </div>
+        )}
+
+        <section className="v2-panel-card">
+          <div className="v2-panel-head">
+            <span className="v2-panel-kicker">{panel.badge}</span>
+            <h4 className="v2-panel-title">{panel.title}</h4>
+          </div>
+
+          <button
+            type="button"
+            className="v2-screenshot-btn"
+            onClick={() => onSelectProject(featured)}
+            title="Click to inspect full side-by-side showcase"
+          >
+            <img
+              src={panel.imageUrl}
+              alt={panel.title}
+              loading="lazy"
+              className="v2-screenshot-img"
+            />
+          </button>
+
+          <div className="v2-features-wrap">
+            <span className="v2-features-label">Highlighted Features</span>
+            <ul className="v2-features-grid">
+              {panel.features.map((feat) => (
+                <li key={feat}>
+                  <CheckCircle2 size={12} />
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {side === 'right' && (
+          <div className="v2-bottom-actions">
+            <button
+              type="button"
+              className="project-detail-btn"
+              onClick={() => onSelectProject(featured)}
+            >
+              <Eye size={13} />
+              <span>Compare Both Panels</span>
+            </button>
+
+            {featured.liveDemoUrl && (
+              <a
+                href={featured.liveDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-link-btn"
+              >
+                <ExternalLink size={13} />
+                <span>Live Admin &amp; Store</span>
+              </a>
+            )}
+
+            <span className="v2-next-hint">
+              Next spread: {remaining.length} more projects →
+            </span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const half = Math.ceil(remaining.length / 2);
+  const items = side === 'left' ? remaining.slice(0, half) : remaining.slice(half);
 
   return (
     <div className="page-content">
       {side === 'left' && (
         <>
-          <h2 className="page-title">
-            {continuation ? 'More Projects' : "Projects I've Worked On"}
-          </h2>
+          <h2 className="page-title">More Projects</h2>
           <div className="title-accent" />
         </>
       )}
@@ -48,7 +164,7 @@ export function ProjectsPage({ side, continuation = false, onSelectProject }: Pr
               ) : (
                 <div className="project-thumb-placeholder">
                   <ImageIcon size={18} />
-                  <span>0{spreadStart + (side === 'left' ? 0 : half) + idx + 1}</span>
+                  <span>0{(side === 'left' ? 0 : half) + idx + 2}</span>
                 </div>
               )}
             </div>
@@ -126,4 +242,3 @@ export function ProjectsPage({ side, continuation = false, onSelectProject }: Pr
     </div>
   );
 }
-

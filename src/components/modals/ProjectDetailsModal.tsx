@@ -22,7 +22,7 @@ export function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalPro
           aria-label={`Project details: ${project.title}`}
         >
           <motion.div
-            className="detail-modal"
+            className={`detail-modal ${project.dualShowcase ? 'detail-modal--wide' : ''}`}
             initial={{ opacity: 0, y: 18, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
@@ -46,24 +46,50 @@ export function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalPro
               </button>
             </div>
 
-            <div className="detail-preview-box">
-              {project.imageUrl ? (
-                <img
-                  src={project.imageUrl}
-                  alt={project.title}
-                  className="detail-preview-img"
-                />
-              ) : (
-                <div className="detail-preview-placeholder">
-                  <ImageIcon size={32} strokeWidth={1.5} />
-                  <span>{project.imagePlaceholderLabel}</span>
-                  <small>
-                    Add screenshot in <code>public/assets/projects/</code> and set{' '}
-                    <code>imageUrl</code> in <code>src/data/portfolioData.ts</code>
-                  </small>
-                </div>
-              )}
-            </div>
+            {project.dualShowcase ? (
+              <div className="modal-dual-grid">
+                {[project.dualShowcase.left, project.dualShowcase.right].map((panel) => (
+                  <div key={panel.title} className="modal-dual-panel">
+                    <span className="modal-dual-badge">{panel.badge}</span>
+                    <h3 className="modal-dual-title">{panel.title}</h3>
+                    <div className="modal-dual-img-wrap">
+                      <img
+                        src={panel.imageUrl}
+                        alt={panel.title}
+                        className="modal-dual-img"
+                      />
+                    </div>
+                    <ul className="detail-cap-list">
+                      {panel.features.map((feat) => (
+                        <li key={feat}>
+                          <CheckCircle2 size={13} />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="detail-preview-box">
+                {project.imageUrl ? (
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="detail-preview-img"
+                  />
+                ) : (
+                  <div className="detail-preview-placeholder">
+                    <ImageIcon size={32} strokeWidth={1.5} />
+                    <span>{project.imagePlaceholderLabel}</span>
+                    <small>
+                      Add screenshot in <code>public/assets/projects/</code> and set{' '}
+                      <code>imageUrl</code> in <code>src/data/portfolioData.ts</code>
+                    </small>
+                  </div>
+                )}
+              </div>
+            )}
 
             <p className="detail-overview">{project.detailedOverview}</p>
 

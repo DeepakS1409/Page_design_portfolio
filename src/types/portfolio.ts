@@ -32,6 +32,13 @@ export interface SkillCategory {
   items: string[];
 }
 
+export interface ProjectPanel {
+  badge: string;
+  title: string;
+  imageUrl: string;
+  features: string[];
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -45,6 +52,10 @@ export interface ProjectItem {
   imagePlaceholderLabel: string;
   githubUrl?: string;
   liveDemoUrl?: string;
+  dualShowcase?: {
+    left: ProjectPanel;
+    right: ProjectPanel;
+  };
 }
 
 export interface CertificateItem {

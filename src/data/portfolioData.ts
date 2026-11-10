@@ -221,24 +221,48 @@ export const CURRENTLY_LEARNING: string[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
-    id: 'deepkart',
-    title: 'DeepKart',
+    id: 'v2-boutique',
+    title: 'V2 Boutique – E-Commerce Platform',
     category: 'Web & E-Commerce',
-    status: 'Project Concept / Build',
+    status: 'Live Platform',
     shortDescription:
-      'An e-commerce website with product browsing, cart, wishlist, checkout, orders, and profile functionality.',
+      'V2 Boutique is a complete online shopping platform designed for selling pure cotton nightwear and clothing products. It includes a customer-facing e-commerce website and a separate admin dashboard for managing store operations.',
     detailedOverview:
-      'DeepKart is designed as a full-featured e-commerce web experience centered on clean product discovery, shopping cart management, saved wishlists, structured checkout flow, order tracking views, and user profile management.',
+      'V2 Boutique is a complete online shopping platform designed for selling pure cotton nightwear and clothing products. It pairs a customer-facing storefront for product discovery and category browsing with V2 Operations, a dedicated admin console for order management, payment tracking, stock & inventory control, sales & profit analytics, customer management, and QR ship scanning.',
     keyCapabilities: [
-      'Product catalog browsing and item views',
-      'Interactive cart and wishlist state management',
-      'Checkout flow, order history, and profile screens',
+      'Order Management & QR Ship Scanner dispatch workflow',
+      'Payment Tracking, Stock & Inventory Management, and Sales & Profit Analytics',
+      'Customer Management, Product Browsing, and Category Management',
     ],
-    technologies: ['HTML', 'CSS', 'JavaScript', 'React'],
-    imageUrl: '',
-    imagePlaceholderLabel: 'DeepKart Screenshot Placeholder',
+    technologies: ['React', 'TypeScript', 'PostgreSQL', 'Cloudflare Workers'],
+    imageUrl: '/assets/projects/v2-boutique-storefront.jpg',
+    imagePlaceholderLabel: 'V2 Boutique – E-Commerce Platform',
     githubUrl: '',
-    liveDemoUrl: '',
+    liveDemoUrl: 'https://online-platform.deepaksenthilkumar14.workers.dev/#/admin',
+    dualShowcase: {
+      left: {
+        badge: 'Left Panel · Store Operations',
+        title: 'V2 Operations – Admin Dashboard',
+        imageUrl: '/assets/projects/v2-operations-admin.jpg',
+        features: [
+          'Order Management',
+          'Payment Tracking',
+          'Stock & Inventory Management',
+          'Sales & Profit Analytics',
+          'Customer Management',
+          'QR Ship Scanner',
+        ],
+      },
+      right: {
+        badge: 'Right Panel · Storefront',
+        title: 'V2 Boutique – E-Commerce Website',
+        imageUrl: '/assets/projects/v2-boutique-storefront.jpg',
+        features: [
+          'Product Browsing',
+          'Category Management',
+        ],
+      },
+    },
   },
   {
     id: 'factorymind-ai',
