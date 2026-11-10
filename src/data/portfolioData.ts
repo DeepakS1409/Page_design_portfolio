@@ -315,7 +315,7 @@ export const PROJECTS: ProjectItem[] = [
       'In-lot slot availability and navigation guidance',
     ],
     technologies: ['JavaScript', 'React', 'QR Workflow', 'AI / Smart Systems'],
-    imageUrl: '',
+    imageUrl: '/assets/projects/image.png',
     imagePlaceholderLabel: 'Smart Parking Preview Placeholder',
     githubUrl: '',
     liveDemoUrl: '',
