@@ -17,6 +17,7 @@ export interface ChapterMeta {
   subtitle: string;
   pageNumbers: [number, number];
   continuation?: boolean;
+  spreadPart?: number;
 }
 
 export interface TimelineItem {

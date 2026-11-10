@@ -192,6 +192,7 @@ export function App() {
           <ProjectsPage
             side={side}
             continuation={activeChapter.continuation}
+            spreadPart={activeChapter.spreadPart}
             onSelectProject={setSelectedProject}
           />
         );

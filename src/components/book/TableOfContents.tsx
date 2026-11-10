@@ -64,6 +64,11 @@ export function TableOfContents({
             <nav className="toc-list" aria-label="Book chapters">
               {BOOK_CHAPTERS.filter((chapter) => !chapter.continuation).map((chapter) => {
                 const active = BOOK_CHAPTERS[currentSpread]?.id === chapter.id;
+                const matchingSpreads = BOOK_CHAPTERS.filter((c) => c.id === chapter.id);
+                const firstPage = matchingSpreads[0]?.pageNumbers[0] ?? chapter.pageNumbers[0];
+                const lastPage =
+                  matchingSpreads[matchingSpreads.length - 1]?.pageNumbers[1] ??
+                  chapter.pageNumbers[1];
                 return (
                   <button
                     key={chapter.id}
@@ -80,7 +85,7 @@ export function TableOfContents({
                       <span className="toc-item-sub">{chapter.subtitle}</span>
                     </span>
                     <span className="toc-pages">
-                      pp. {chapter.pageNumbers[0]}–{chapter.pageNumbers[1]}
+                      pp. {firstPage}–{lastPage}
                     </span>
                   </button>
                 );
